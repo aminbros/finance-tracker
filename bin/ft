@@ -1,0 +1,33 @@
+#!/usr/bin/python
+
+import os.path
+import sys
+
+__dirname = os.path.dirname(__file__)
+
+sys.path.append(os.path.join(__dirname, "../lib"))
+
+import ft
+from importlib import import_module
+
+configPath = os.path.normpath(os.path.join(__dirname, "../config.json"));
+config = ft.load_config(configPath);
+argv = sys.argv[1:]
+
+ft.set_env_path(os.path.join(__dirname, "../env.json"))
+
+try:
+  if len(argv) == 0:
+    try:
+      mod = import_module('.__default__', 'ft.modules')
+      mod.main(argv[1:], config)
+    except ImportError:
+      raise AssertionError("Don't know what to do")
+  else:
+    try:
+      mod = import_module('.' + argv[0], 'ft.modules')
+      mod.main(argv[1:], config)
+    except ImportError:
+      raise AssertionError("Unkown command")
+except AssertionError as error:
+  print "Error:\n  %s" % str(error)
