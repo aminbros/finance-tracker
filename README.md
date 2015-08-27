@@ -21,7 +21,7 @@ ft add webdev 500 --cat dev
 
 ```
 
-# Edit when things go wrong
+# Edit data as you wish
 
 ```
 
